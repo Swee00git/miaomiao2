@@ -1,4 +1,4 @@
-# miaomiao2
+# miaomiao
 
 ## Project setup
 ```
