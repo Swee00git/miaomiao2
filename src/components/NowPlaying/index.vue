@@ -109,7 +109,7 @@ export default {
 </script>
 
 <style scoped>
-#content .movie_body{ flex:1; overflow:auto;top: 95px;}
+#content .movie_body{ flex:1; overflow:auto;}
 .movie_body ul{ margin:0 12px; overflow: hidden;}
 .movie_body ul li{ margin-top:12px; display: flex; align-items:center; border-bottom: 1px #e6e6e6 solid; padding-bottom: 10px;}
 .movie_body .pic_show{ width:64px; height: 90px;}
