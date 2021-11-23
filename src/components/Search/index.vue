@@ -201,7 +201,7 @@ export default {
 </script>
 
 <style scoped>
-    #content .search_body{ flex:1; overflow:auto;padding-top: 12px;}
+    #content .search_body{ flex:1; overflow:auto;}
     .search_body .search_input{ padding: 8px 10px; background-color: #f5f5f5; border-bottom: 1px solid #e5e5e5;}
     .search_body .search_input_wrapper{ padding: 0 10px; border: 1px solid #e6e6e6; border-radius: 5px; background-color: #fff; display: flex; line-height: 20px;}
     .search_body .search_input_wrapper i{font-size: 16px; padding: 4px 0;}
