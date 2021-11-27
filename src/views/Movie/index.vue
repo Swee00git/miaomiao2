@@ -5,7 +5,7 @@
                 <div class="movie_menu">
                     <router-link tag="div" to="/movie/city" class="city_name">
                         <div>
-                            <span>大连</span><i class="iconfont icon-lower-triangle"></i>
+                            <span>{{ $store.state.city.nm }}</span><i class="iconfont icon-lower-triangle"></i>
                         </div>
                     </router-link>
                     <div class="hot_swtich">
@@ -21,18 +21,50 @@
                 </keep-alive>
             </div>
         <TabBar></TabBar>
+        <!-- <MessageBox /> -->
     </div>
 </template>
 
 <script>
-import Header from '@/components/Header'
-import TabBar from '@/components/TabBar'
+import Header from '@/components/Header';
+import TabBar from '@/components/TabBar';
+// import MessageBox from '@/components/JS/MessageBox';  展示弹窗效果
+ import {messageBox} from '@/components/JS';  
 
 export default {
     name:'Movie',
     components:{
         Header,
-        TabBar
+        TabBar,
+        // MessageBox
+    },
+    
+    mounted(){
+        setTimeout(() => {
+            this.axios.get('https://v0.yiketianqi.com/api?version=v10&appid=94569145&appsecret=KBw501qN').then((res)=>{
+                console.log('123,',res);
+                var status = res.status;
+                if (status === 200) {
+
+                    var nm = res.data.city;
+                    var id = res.data.uvIndex;
+                    // console.log(this.$store.state.city.id);
+                    // console.log(id);
+                    if (this.$store.state.city.id === id) {return;}
+                    messageBox({
+                    title:'定位',
+                    content:nm,
+                    cancel:'取消',
+                    ok:'切换定位',
+                        handleOk(){ //两个方法1，更改本地存储  2，更改状态管理
+                            window.localStorage.setItem('nowNm',nm);
+                            window.localStorage.setItem('nowPm',id);
+                            window.location.reload();
+                        },
+                    });
+                }
+            })
+        }, 3000);
     }
 }
 </script>
