@@ -1,116 +1,96 @@
 <template>
     <div class="movie_body">
-        <ul>
-            <li>
-                <div class="pic_show"><img src="/images/movie_1.jpg"></div>
-                <div class="info_list">
-                    <h2>无名之辈</h2>
-                    <p>观众评 <span class="grade">9.2</span></p>
-                    <p>主演: 陈建斌,任素汐,潘斌龙</p>
-                    <p>今天55家影院放映607场</p>
-                </div>
-                <div class="btn_mall">
-                    购票
-                </div>
-            </li>
-            <li>
-                <div class="pic_show"><img src="/images/movie_2.jpg"></div>
-                <div class="info_list">
-                    <h2>毒液：致命守护者</h2>
-                    <p>观众评 <span class="grade">9.3</span></p>
-                    <p>主演: 汤姆·哈迪,米歇尔·威廉姆斯,里兹·阿迈德</p>
-                    <p>今天56家影院放映443场</p>
-                </div>
-                <div class="btn_mall">
-                    购票
-                </div>
-            </li>
-            <li>
-                <div class="pic_show"><img src="/images/movie_1.jpg"></div>
-                <div class="info_list">
-                    <h2>无名之辈</h2>
-                    <p>观众评 <span class="grade">9.2</span></p>
-                    <p>主演: 陈建斌,任素汐,潘斌龙</p>
-                    <p>今天55家影院放映607场</p>
-                </div>
-                <div class="btn_mall">
-                    购票
-                </div>
-            </li>
-            <li>
-                <div class="pic_show"><img src="/images/movie_2.jpg"></div>
-                <div class="info_list">
-                    <h2>毒液：致命守护者</h2>
-                    <p>观众评 <span class="grade">9.3</span></p>
-                    <p>主演: 汤姆·哈迪,米歇尔·威廉姆斯,里兹·阿迈德</p>
-                    <p>今天56家影院放映443场</p>
-                </div>
-                <div class="btn_mall">
-                    购票
-                </div>
-            </li>
-            <li>
-                <div class="pic_show"><img src="/images/movie_1.jpg"></div>
-                <div class="info_list">
-                    <h2>无名之辈</h2>
-                    <p>观众评 <span class="grade">9.2</span></p>
-                    <p>主演: 陈建斌,任素汐,潘斌龙</p>
-                    <p>今天55家影院放映607场</p>
-                </div>
-                <div class="btn_mall">
-                    购票
-                </div>
-            </li>
-            <li>
-                <div class="pic_show"><img src="/images/movie_2.jpg"></div>
-                <div class="info_list">
-                    <h2>毒液：致命守护者</h2>
-                    <p>观众评 <span class="grade">9.3</span></p>
-                    <p>主演: 汤姆·哈迪,米歇尔·威廉姆斯,里兹·阿迈德</p>
-                    <p>今天56家影院放映443场</p>
-                </div>
-                <div class="btn_mall">
-                    购票
-                </div>
-            </li>
-            <li>
-                <div class="pic_show"><img src="/images/movie_1.jpg"></div>
-                <div class="info_list">
-                    <h2>无名之辈</h2>
-                    <p>观众评 <span class="grade">9.2</span></p>
-                    <p>主演: 陈建斌,任素汐,潘斌龙</p>
-                    <p>今天55家影院放映607场</p>
-                </div>
-                <div class="btn_mall">
-                    购票
-                </div>
-            </li>
-            <li>
-                <div class="pic_show"><img src="/images/movie_2.jpg"></div>
-                <div class="info_list">
-                    <h2>毒液：致命守护者</h2>
-                    <p>观众评 <span class="grade">9.3</span></p>
-                    <p>主演: 汤姆·哈迪,米歇尔·威廉姆斯,里兹·阿迈德</p>
-                    <p>今天56家影院放映443场</p>
-                </div>
-                <div class="btn_mall">
-                    购票
-                </div>
-            </li>
-        </ul>
+        <Loading v-if="isLoading"/>
+       <Scroller v-else ref="city_list" :handleToScroll="handleToScroll" :handleToTouchEnd="handleToTouchEnd">
+            <ul>
+                <li class="massage">{{massage}}</li>
+                <li v-for="item in moviesList" :key="item.date">
+                    <div class="pic_show"><img src="/images/movie_1.jpg"></div>
+                    <div class="info_list">
+                        <h2>{{ item.date }}</h2>
+                        <p>观众评 <span class="grade">{{item.win_speed}}</span></p>
+                        <p>主演: {{item.wea}}</p>
+                        <p>今天{{item.win_day}}影院放映{{item.tem_day}}场</p>
+                    </div>
+                    <div class="btn_mall">
+                        购票
+                    </div>
+                </li>
+            </ul>
+       </Scroller>
 	</div>
 </template>
 
 <script>
 export default {
     name : 'NowPLaying',
+    data(){
+        return {
+            moviesList:[],
+            massage:'',
+            isLoading:true,
+            // prevCityId :-1
+        }
+    },
+    activated(){
+        // var cityId = this.$store.state.city.id;
+        // console.log(cityId);
+        // if (this.prevCityId === cityId) {
+        //     return;
+        // }
+        // this.isLoading = true;
 
+        this.axios.get('https://spot.yiketianqi.com/?appid=94569145&appsecret=KBw501qN&cityid=144944'/*+cityId*/).then((res)=>{
+                //console.log(res);
+            var status = res.status;
+            if ( status === 200 ) {
+                this.moviesList = res.data.data;
+                this.isLoading = false;
+                // this.prevCityId = cityId;
+            }else{
+                console.log('not in page!')
+            }
+        }); 
+    },
+    methods : {
+        // handleToDetail(){
+        //     console.log('tap');
+        // },
+        handleToScroll(pos) {
+            if (pos.y > 30) {
+                this.massage = "reload...";
+            }
+        },
+
+        handleToTouchEnd(pos) {
+            if (pos.y > 30) {
+                this.axios
+                .get(
+                    "https://spot.yiketianqi.com/?appid=94569145&appsecret=KBw501qN&cityid=118387"
+                )
+                .then((res) => {
+                    if (res.status === 200) {
+                    console.log("ok", res.status);
+                    setTimeout(() => {
+                        this.cities = res.data.list;
+                        this.massage = "";
+                    }, 1000);
+                    this.massage = "reload over!";
+                    } else {
+                    console.log(res.status);
+                    }
+                });
+                //  this.pullDownMsg = "reload over!";
+            }
+        },
+    }
 }
 </script>
 
 <style scoped>
 #content .movie_body{ flex:1; overflow:auto;}
 .movie_body ul{ margin:0 12px; overflow: hidden;}
+.movie_body ul .massage{margin: 0px;padding: 0px;}
 .movie_body ul li{ margin-top:12px; display: flex; align-items:center; border-bottom: 1px #e6e6e6 solid; padding-bottom: 10px;}
 .movie_body .pic_show{ width:64px; height: 90px;}
 .movie_body .pic_show img{ width:100%;}
