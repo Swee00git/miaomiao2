@@ -1,27 +1,27 @@
 <template>
     <div id="main">
         <Header title="miaomiao Movies"></Header>
-            <div id="content">
-                <div class="movie_menu">
-                    <router-link tag="div" to="/movie/city" class="city_name">
-                        <div>
-                            <span>{{ $store.state.city.nm }}</span><i class="iconfont icon-lower-triangle"></i>
-                        </div>
-                    </router-link>
-                    <div class="hot_swtich">
-                        <router-link tag="div" to="/movie/nowPlaying" class="hot_item">正在热映</router-link>
-                        <router-link tag="div" to="/movie/comingSoon" class="hot_item">即将上映</router-link>
+        <div id="content">
+            <div class="movie_menu">
+                <router-link tag="div" to="/movie/city" class="city_name">
+                    <div>
+                        <span>{{ $store.state.city.nm }}</span><i class="iconfont icon-lower-triangle"></i>
                     </div>
-                    <router-link tag="div" to="/movie/search" class="search_entry">
-                        <i class="iconfont icon-sousuo"></i>
-                    </router-link>
+                </router-link>
+                <div class="hot_swtich">
+                    <router-link tag="div" to="/movie/nowPlaying" class="hot_item">正在热映</router-link>
+                    <router-link tag="div" to="/movie/comingSoon" class="hot_item">即将上映</router-link>
                 </div>
-                <keep-alive>
-                    <router-view />
-                </keep-alive>
+                <router-link tag="div" to="/movie/search" class="search_entry">
+                    <i class="iconfont icon-sousuo"></i>
+                </router-link>
             </div>
-        <TabBar></TabBar>
-        <!-- <MessageBox /> -->
+            <keep-alive>
+                <router-view />
+            </keep-alive>
+        </div>
+        <TabBar />
+        <router-view name="detail" />
     </div>
 </template>
 
@@ -42,14 +42,14 @@ export default {
     mounted(){
         setTimeout(() => {
             this.axios.get('https://v0.yiketianqi.com/api?version=v10&appid=94569145&appsecret=KBw501qN').then((res)=>{
-                console.log('123,',res);
+                //console.log('123,',res);
                 var status = res.status;
                 if (status === 200) {
 
                     var nm = res.data.city;
                     var id = res.data.uvIndex;
-                    // console.log(this.$store.state.city.id);
-                    // console.log(id);
+                     console.log(this.$store.state.city.id);
+                     console.log(id);
                     if (this.$store.state.city.id === id) {return;}
                     messageBox({
                     title:'定位',
