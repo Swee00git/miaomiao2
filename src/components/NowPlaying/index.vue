@@ -4,13 +4,13 @@
        <Scroller v-else ref="city_list" :handleToScroll="handleToScroll" :handleToTouchEnd="handleToTouchEnd">
             <ul>
                 <li class="massage">{{massage}}</li>
-                <li v-for="item in moviesList" :key="item.date">
-                    <div class="pic_show"><img src="/images/movie_1.jpg"></div>
+                <li v-for="item in moviesList" :key="item.pm">
+                    <div class="pic_show" @touchstart="handleToDetail(item.pm)"><img src="/images/movie_1.jpg"></div>
                     <div class="info_list">
-                        <h2>{{ item.date }}</h2>
-                        <p>观众评 <span class="grade">{{item.win_speed}}</span></p>
-                        <p>主演: {{item.wea}}</p>
-                        <p>今天{{item.win_day}}影院放映{{item.tem_day}}场</p>
+                        <h2 @touchstart="handleToDetail(item.pm)">{{ item.city }}</h2>
+                        <p>观众评 <span class="grade">{{item.pm}}</span></p>
+                        <p>主演: {{item.aqi_level}}</p>
+                        <p>今天{{item.province}}影院放映{{item.aqi}}场</p>
                     </div>
                     <div class="btn_mall">
                         购票
@@ -40,11 +40,11 @@ export default {
         // }
         // this.isLoading = true;
 
-        this.axios.get('https://spot.yiketianqi.com/?appid=94569145&appsecret=KBw501qN&cityid=144944'/*+cityId*/).then((res)=>{
-                //console.log(res);
+        this.axios.get('https://v0.yiketianqi.com/aqi/rankcity?appid=94569145&appsecret=KBw501qN'/*+cityId*/).then((res)=>{
+               // console.log(res);
             var status = res.status;
             if ( status === 200 ) {
-                this.moviesList = res.data.data;
+                this.moviesList = res.data.list;
                 this.isLoading = false;
                 // this.prevCityId = cityId;
             }else{
@@ -66,7 +66,7 @@ export default {
             if (pos.y > 30) {
                 this.axios
                 .get(
-                    "https://spot.yiketianqi.com/?appid=94569145&appsecret=KBw501qN&cityid=118387"
+                    "https://v0.yiketianqi.com/aqi/rankcity?appid=94569145&appsecret=KBw501qN"
                 )
                 .then((res) => {
                     if (res.status === 200) {
@@ -83,6 +83,10 @@ export default {
                 //  this.pullDownMsg = "reload over!";
             }
         },
+        handleToDetail(moviePm){
+           // console.log(moviedate);
+            this.$router.push('/Movie/detail/1/' +moviePm)
+        }
     }
 }
 </script>
