@@ -6,20 +6,18 @@ import cinemaRouter from './cinema'
 
 Vue.use(VueRouter)
 
-const routes = [
-  movieRouter,
-  mineRouter,
-  cinemaRouter,
-  {
-    path:'/*',
-    redirect:'/movie'
-  }
-]
-
 const router = new VueRouter({
   mode: 'history',
-  base: process.env.BASE_URL,
-  routes
+  base: 'miaomiao',
+  routes =[
+    movieRouter,
+    mineRouter,
+    cinemaRouter,
+    {
+      path:'/*',
+      redirect:'/movie'
+    }
+  ] 
 })
 
 export default router
