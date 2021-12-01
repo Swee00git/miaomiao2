@@ -131,7 +131,7 @@ export default {
             var status = res.status;
             if ( status === 200 ) {
                 this.detailList = res.data;
-                console.log(this.detailList);
+                //console.log(this.detailList);
                 this.isLoading = false;
                 this.$nextTick(()=>{
                     new Swiper(this.$refs.detail_player,{
