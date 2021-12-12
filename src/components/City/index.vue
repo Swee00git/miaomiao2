@@ -1,8 +1,9 @@
 <template>
   <div class="city_body">
     <div class="city_list">
-      <Loading v-if="isLoading"/>
-      <Scroller v-else
+      <Loading v-if="isLoading" />
+      <Scroller
+        v-else
         ref="city_list"
         :handleToScroll="handleToScroll"
         :handleToTouchEnd="handleToTouchEnd"
@@ -12,14 +13,24 @@
           <div class="city_hot">
             <h2>热门城市</h2>
             <ul class="clearfix">
-              <li v-for="item in hotList" :key="item.pm" @touchstart='handleToCity(item.city , item.pm)'>{{ item.city }}</li>
+              <li
+                v-for="item in hotList"
+                :key="item.pm"
+                @touchstart="handleToCity(item.city, item.pm)"
+              >
+                {{ item.city }}
+              </li>
             </ul>
           </div>
           <div class="city_sort" ref="city_sort">
             <div v-for="item in cityList" :key="item.province">
               <h2>{{ item.province }}</h2>
               <ul>
-                <li v-for="itemList in item.list" :key="itemList.pm" @touchstart='handleToCity(itemList.nm , itemList.pm)'>
+                <li
+                  v-for="itemList in item.list"
+                  :key="itemList.pm"
+                  @touchstart="handleToCity(itemList.nm, itemList.pm)"
+                >
                   {{ itemList.nm }}
                 </li>
               </ul>
@@ -50,71 +61,42 @@ export default {
       cityList: [],
       hotList: [],
       pullDownMsg: "",
-      isLoading : true
+      isLoading: true,
     };
   },
   mounted() {
+      var cityList = window.localStorage.getItem('cityList');
+      var hotList = window.localStorage.getItem('hotList');
 
-    var cityList = window.localStorage.getItem('cityList');
-    var hotList = window.localStorage.getItem('hotList');
+      if (cityList && hotList) {
+        this.cityList = JSON.parse(cityList) ;
+        this.hotList = JSON.parse(hotList) ;
+        this.isLoading = false;
+      }else{
+        this.axios
+          .get(
+            "https://v0.yiketianqi.com/aqi/rankcity?appid=36318646&appsecret=VSEak9nH")
+          .then((res) => {
+            console.log(res);
+            var msg = res.status;
+            if (msg === 200) {
+              var cities = res.data.list;
+              console.log(cities);
+              this.isLoading = false;
 
-    if (cityList && hotList) {
-      this.cityList = JSON.parse(cityList) ;
-      this.hotList = JSON.parse(hotList) ;
-      this.isLoading = false;
-    }else{
-      this.axios
-        .get(
-          "https://v0.yiketianqi.com/aqi/rankcity?appid=94569145&appsecret=KBw501qN"
-        )
-        .then((res) => {
-          console.log(res);
-          var msg = res.status;
-          if (msg === 200) {
-            var cities = res.data.list;
-            this.isLoading = false;
-            // this.$nextTick(()=>{
-            //     new BScroll( this.$refs.city_list,{
-            //          tap:true,
-            //          probetype: 1
-            //  });
+              // console.log(cities);
+              //[{ index : 'A' , list : [{ nm : '阿城' , id = 123 }]}]
+              var { cityList, hotList } = this.formatCityList(cities);
+              this.cityList = cityList;
+              this.hotList = hotList;
+              window.localStorage.setItem('cityList',JSON.stringify(cityList));
+              window.localStorage.setItem('hotList',JSON.stringify(hotList));
 
-            //     // scroll.on('scroll',(pos)=>{
-            //     //     if ( pos.y > 30 ) {
-            //     //         this.pullDownMsg = "reload...";
-            //     //     }
-            //     // });
-
-            //     // scroll.on('touchEnd',(pos)=>{
-            //     //     if ( pos.y > 30 ) {
-            //     //         /* this,axios.get('').then((res)=>{
-            //     //            var msg = res.status;
-            //     //            if (msg === 200) {
-            //     //                this.pullDownMsg = "更新成功！";
-            //     //                setTimeout(()=>{
-            //     //                    this.cities = res.data.list;
-            //     //                    this.pullDownMsg = '';
-            //     //                },1000);
-            //     //            }
-            //     //        })  */
-            //     //         this.pullDownMsg = "reload over!"
-            //     //     }
-            //     // });
-
-            //  });
-            // console.log(cities);
-            //[{ index : 'A' , list : [{ nm : '阿城' , id = 123 }]}]
-            var { cityList, hotList } = this.formatCityList(cities);
-            this.cityList = cityList;
-            this.hotList = hotList;
-            window.localStorage.setItem('cityList',JSON.stringify(cityList));
-            window.localStorage.setItem('hotList',JSON.stringify(hotList));
-
-          } else {
-            console.log("not in 200");
-          }
-        });
-    }
+            } else {
+              console.log("not in 200");
+            }
+          });
+      }
   },
   methods: {
     formatCityList(cities) {
@@ -194,7 +176,7 @@ export default {
           if (pos.y > 30) {
               this.axios
               .get(
-                  "https://v0.yiketianqi.com/aqi/rankcity?appid=94569145&appsecret=KBw501qN"
+                  "https://v0.yiketianqi.com/aqi/rankcity?appid=36318646&appsecret=VSEak9nH"
               )
               .then((res) => {
                   if (res.status === 200) {
@@ -219,7 +201,7 @@ export default {
       this.$router.push('/movie/nowPlaying')
     },
   },
-}
+};
 </script>
 
 <style scoped>

@@ -40,7 +40,7 @@ export default {
         // }
         // this.isLoading = true;
 
-        this.axios.get('https://v0.yiketianqi.com/aqi/rankcity?appid=94569145&appsecret=KBw501qN'/*+cityId*/).then((res)=>{
+        this.axios.get('https://v0.yiketianqi.com/aqi/rankcity?appid=36318646&appsecret=VSEak9nH'/*+cityId*/).then((res)=>{
                // console.log(res);
             var status = res.status;
             if ( status === 200 ) {
@@ -66,7 +66,7 @@ export default {
             if (pos.y > 30) {
                 this.axios
                 .get(
-                    "https://v0.yiketianqi.com/aqi/rankcity?appid=94569145&appsecret=KBw501qN"
+                    "https://v0.yiketianqi.com/aqi/rankcity?appid=36318646&appsecret=VSEak9nH"
                 )
                 .then((res) => {
                     if (res.status === 200) {

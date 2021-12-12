@@ -14,11 +14,11 @@
 					</div>
 					<div class="detail_list_info">
 						<h2>{{detailList.city}}</h2>
-						<p>{{detailList.cityid}}</p>
+						<p>{{detailList.cityEn}}</p>
 						<p>{{detailList.update_time}}</p>
 						<p>{{detailList.leader}}</p>
 						<p>{{detailList.level}}</p>
-						<p>{{detailList.province}}</p>
+						<p>{{detailList.air_tips}}</p>
 					</div>
 				</div>
 			</div>
@@ -126,8 +126,8 @@ export default {
     },
     mounted(){
         console.log(this.moviePm);
-        this.axios.get('https://spot.yiketianqi.com/?appid=94569145&appsecret=KBw501qN&cityid=118387'/*+cityId*/).then((res)=>{
-               // console.log('detail',res);
+        this.axios.get('https://v0.yiketianqi.com/api?version=v10&appid=36318646&appsecret=VSEak9nH'/*+cityId*/).then((res)=>{
+               console.log('detail',res);
             var status = res.status;
             if ( status === 200 ) {
                 this.detailList = res.data;
