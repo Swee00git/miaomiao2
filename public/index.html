@@ -4,19 +4,30 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
-    <link type="text/css" href="<%=BASE_URL %>favicon.ico">
+    <link rel="stylesheet" href="<%=BASE_URL %>favicon.ico">
     <link rel="stylesheet" href="<%=BASE_URL %>css/common.css">
     <link rel="stylesheet" href="<%=BASE_URL %>css/iconfont/iconfont.css">
-    <link rel="stylesheet" href="<%=BASE_URL %>libs/swiper-4.1.0.min.css">
-    <script src="<%=BASE_URL %>libs/swiper-4.1.0.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.css">  
+    <link rel="stylesheet" href="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.css">    
+    <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.js"> </script>  
+    <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js"> </script>
+    <script src="https://unpkg.com/swiper@6.8.4/swiper-bundle.min.js.map"> </script>
     
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title>miaomiao</title>
   </head>
+  <style>
+    #app{ display: flex;height: 100%; background-color: rgb(215, 248, 237);}
+    #app div{margin: auto;}
+  </style>
   <body>
     <noscript>
       <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="app"></div>
+    <div id="app">
+      <div>
+        努力加载中。。。
+      </div>
+    </div>
     <!-- built files will be auto injected --> 
   </body>
 </html>

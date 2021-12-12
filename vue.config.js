@@ -1,11 +1,15 @@
-/*module.exports = {
-    devServer : {
-        Proxy : {
-            /*'/api' : {
-                target : 'https://v0.yiketianqi.com',
-                changeOrigin : true
-            }
-        }
-    }
-}*/
+// module.exports = {
+//     publicPath : '/',
+//     devServer : {
+//         proxy : {
+//             '/api' : {
+//                 target : 'https://test-seo.edatastore.io',
+//                 changeOrigin : true,
+//                 pathRewrite: {
+//                     "^/api": ""
+//                 }
+//             },
+//         },
+//     }
+//   }
 

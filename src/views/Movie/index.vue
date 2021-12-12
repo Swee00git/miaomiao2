@@ -41,8 +41,8 @@ export default {
     
     mounted(){
         setTimeout(() => {
-            this.axios.get('https://v0.yiketianqi.com/api?version=v10&appid=94569145&appsecret=KBw501qN').then((res)=>{
-                //console.log('123,',res);
+            this.axios.get('https://v0.yiketianqi.com/api?version=v10&appid=36318646&appsecret=VSEak9nH').then((res)=>{
+               // console.log('123,',res);
                 var status = res.status;
                 if (status === 200) {
 
